@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CodeSense — AI code explainer &amp; mentor</title>
+  <meta name="description" content="Paste any code, pick a mode, and get an AI mentor's explanation instantly. No signup, no API key." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">&lt;/&gt; <span>CodeSense</span></div>
+      <p class="tagline">Paste code. Pick a mentor mode. Understand anything.</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- ============ INPUT ============ -->
+    <section class="card" aria-label="Code input">
+      <div class="card-header">
+        <h2>Your code</h2>
+        <div class="lang-row">
+          <label for="language">Language</label>
+          <select id="language">
+            <option value="auto" selected>Auto-detect</option>
+            <option value="python">Python</option>
+            <option value="c">C</option>
+            <option value="cpp">C++</option>
+            <option value="java">Java</option>
+            <option value="javascript">JavaScript</option>
+          </select>
+          <span id="detected-lang" class="detected" hidden></span>
+        </div>
+      </div>
+
+      <textarea
+        id="code-input"
+        placeholder="Paste your code here… (e.g. def fib(n): ...)"
+        spellcheck="false"
+        rows="10"
+        aria-label="Code to explain"
+      ></textarea>
+
+      <div class="input-footer">
+        <span id="char-count" class="char-count">0 / 6000</span>
+        <span class="hint">Code is sent to a free AI API — never paste secrets or API keys.</span>
+      </div>
+
+      <div class="modes" role="radiogroup" aria-label="Mentor mode">
+        <button type="button" class="mode-btn selected" data-mode="eli5" role="radio" aria-checked="true">
+          <span class="mode-emoji">🧒</span>
+          <span class="mode-name">Explain like I'm 5</span>
+          <span class="mode-desc">Simple analogies, zero jargon</span>
+        </button>
+        <button type="button" class="mode-btn" data-mode="walkthrough" role="radio" aria-checked="false">
+          <span class="mode-emoji">🚶</span>
+          <span class="mode-name">Walk me through it</span>
+          <span class="mode-desc">Line-by-line explanation</span>
+        </button>
+        <button type="button" class="mode-btn" data-mode="bugs" role="radio" aria-checked="false">
+          <span class="mode-emoji">🐞</span>
+          <span class="mode-name">Find bugs</span>
+          <span class="mode-desc">Bugs, edge cases, pitfalls</span>
+        </button>
+        <button type="button" class="mode-btn" data-mode="improve" role="radio" aria-checked="false">
+          <span class="mode-emoji">🚀</span>
+          <span class="mode-name">Make it better</span>
+          <span class="mode-desc">Cleaner, faster version</span>
+        </button>
+      </div>
+
+      <button id="explain-btn" class="explain-btn">✨ Explain this code</button>
+    </section>
+
+    <!-- ============ OUTPUT ============ -->
+    <section class="card" id="output-card" aria-label="Explanation" hidden>
+      <div class="card-header">
+        <h2 id="output-title">Explanation</h2>
+        <div class="output-actions">
+          <button id="copy-btn" class="ghost-btn">📋 Copy</button>
+        </div>
+      </div>
+
+      <div id="loading" class="loading" hidden>
+        <div class="spinner" aria-hidden="true"></div>
+        <p>Your AI mentor is reading the code…</p>
+      </div>
+
+      <div id="error" class="error" hidden>
+        <p id="error-msg"></p>
+        <button id="retry-btn" class="retry-btn">↻ Try again</button>
+      </div>
+
+      <article id="answer" class="answer" hidden></article>
+
+      <details class="code-preview">
+        <summary>View submitted code</summary>
+        <pre><code id="code-display"></code></pre>
+      </details>
+    </section>
+
+    <!-- ============ HISTORY ============ -->
+    <section class="card" id="history-card" aria-label="History" hidden>
+      <div class="card-header">
+        <h2>Recent asks</h2>
+        <button id="clear-history" class="ghost-btn">Clear</button>
+      </div>
+      <ul id="history-list" class="history-list"></ul>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>
+      Powered by the free, keyless Pollinations AI API ·
+      Built as a daily portfolio project by
+      <a href="https://github.com/entity-coder">entity-coder</a>
+    </p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
